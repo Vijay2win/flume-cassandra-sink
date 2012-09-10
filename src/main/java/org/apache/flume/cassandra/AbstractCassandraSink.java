@@ -23,8 +23,7 @@ import com.netflix.astyanax.serializers.BytesArraySerializer;
 import com.netflix.astyanax.serializers.StringSerializer;
 import com.netflix.astyanax.thrift.ThriftFamilyFactory;
 
-public abstract class AbstractCassandraSink extends AbstractSink
-{
+public abstract class AbstractCassandraSink extends AbstractSink {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCassandraSink.class);
     protected AstyanaxContext<Keyspace> context;
     protected Keyspace keyspace;
@@ -32,21 +31,21 @@ public abstract class AbstractCassandraSink extends AbstractSink
     protected ColumnFamily<byte[], String> column_family;
 
     @Override
-    public void stop()
-    {
+    public void stop() {
         if (context != null)
             context.shutdown();
     }
 
-    public void intialize(Properties config)
-    {
+    public void intialize(Properties config) {
         String cluster = config.getProperty("cluster_name", "flume");
         if (keyspace != null)
             return;
-        
+
         AstyanaxConfigurationImpl configuration = new AstyanaxConfigurationImpl();
-        configuration.setDefaultReadConsistencyLevel(ConsistencyLevel.valueOf(config.getProperty("read_consistency", "CL_ONE")));
-        configuration.setDefaultWriteConsistencyLevel(ConsistencyLevel.valueOf(config.getProperty("write_consistency", "CL_ONE")));
+        configuration.setDefaultReadConsistencyLevel(ConsistencyLevel.valueOf(config.getProperty("read_consistency",
+                "CL_ONE")));
+        configuration.setDefaultWriteConsistencyLevel(ConsistencyLevel.valueOf(config.getProperty("write_consistency",
+                "CL_ONE")));
 
         String maxConnection = config.getProperty("max_connections_per_host");
         ConnectionPoolConfigurationImpl poolConfig = new ConnectionPoolConfigurationImpl(cluster);
@@ -92,8 +91,7 @@ public abstract class AbstractCassandraSink extends AbstractSink
     protected abstract String getConfigName();
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Sink type:" + getClass().getSimpleName();
     }
 }
