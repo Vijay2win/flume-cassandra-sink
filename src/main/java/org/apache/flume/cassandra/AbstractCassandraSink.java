@@ -66,7 +66,8 @@ public abstract class AbstractCassandraSink extends AbstractSink {
         context.start();
         Log.info("Started keyspace with context: %s", context.toString());
         keyspace = context.getEntity();
-        column_family = new ColumnFamily<byte[], String>("events", BytesArraySerializer.get(), StringSerializer.get());
+        String column_name = config.getProperty("column_name", "events");
+        column_family = new ColumnFamily<byte[], String>(column_name, BytesArraySerializer.get(), StringSerializer.get());
 
         timeout = Long.parseLong(config.getProperty("timeout_in_ms", "5000"));
     }
