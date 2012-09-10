@@ -3,7 +3,7 @@ Supports:
 
 #org.apache.flume.cassandra.CassandraSearchSink
 
-Can be used to input data into DSE Search the Row Key is a UUID. Fields in the event headers are sealized as Column name and value, body of the event is searalized with the column name "data" and the value/body as the byte[].
+Can be used to input data into DSE Search (or use cassandra secondary indexes) the Row Key is a UUID. Fields in the event headers are sealized as Column name and value, body of the event is searalized with the column name "data" and the value/body as the byte[].
 
 Property file: cassandra_search.properties
 Values supported in cassandra_search.properties
