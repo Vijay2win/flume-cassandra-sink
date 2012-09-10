@@ -36,3 +36,14 @@ keyspace_name
 column_name
 timeout_in_ms
 ```
+
+#Installation
+
+```
+git clone git://github.com/Vijay2win/flume-cassandra-sink.git flume-cassandra-sink
+cd flume-cassandra-sink
+mvn install
+cd target
+```
+
+Copy flume* lib/* to the flume installation lib directory.
