@@ -7,15 +7,15 @@ Can be used to input data into DSE Search the Row Key is a UUID. Fields in the e
 
 Property file: cassandra_search.properties
 Values supported in cassandra_search.properties
-#read_consistency
-#write_consistency
-#max_connections_per_host
-#seeds
-#keyspace_name
-#column_name
-#timeout_in_ms
-
-====================================================
+```
+read_consistency
+write_consistency
+max_connections_per_host
+seeds
+keyspace_name
+column_name
+timeout_in_ms
+```
 
 org.apache.flume.cassandra.CassandraSink
 
