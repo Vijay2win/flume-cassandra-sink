@@ -21,7 +21,7 @@ timeout_in_ms
 
 #org.apache.flume.cassandra.CassandraSink
 
-Can be used to input data into cassandra the row key is the current date (string format: "YYYY-MM-DD HH:MM:SS"). Fields in the headers are sealized as Column name and column value, body of the event is searalized with the column name "data" and the value as the byte[] (event body), optionally users and insert a uniq prefix for all the column names inserted by adding a field name "event_prefix" within the event object. 
+Can be used to input data into cassandra the row key is the current date (string format: "YYYY-MM-DD HH:MM:SS"). Fields in the headers are sealized as Column name and column value, body of the event is searalized with the column name "data" and the value as the byte[] (event body), optionally users can insert a uniq prefix to all the column names (mentioned above) by adding a field name "event_prefix" within the event object. 
 
 Property File: cassandra.properties
 
