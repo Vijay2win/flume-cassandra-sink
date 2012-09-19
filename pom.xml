@@ -4,16 +4,36 @@
 	<groupId>com.apache.flume.cassandra</groupId>
 	<artifactId>flume-cassandra-sink</artifactId>
 	<version>1.0-SNAPSHOT</version>
+
+  <properties>
+	  <astyanax.version>1.0.4</astyanax.version>
+	  <flume.version>1.3.0-SNAPSHOT</flume.version>
+
+    <distro.release.url></distro.release.url>
+    <distro.snapshot.url></distro.snapshot.url>
+  </properties>
+
+  <distributionManagement>
+    <repository>
+      <id>central</id>
+      <url>${distro.release.url}</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshots</id>
+      <url>${distro.snapshot.url}</url>
+    </snapshotRepository>
+  </distributionManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.netflix.astyanax</groupId>
 			<artifactId>astyanax</artifactId>
-			<version>1.0.4</version>
+      <version>${astyanax.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.flume</groupId>
 			<artifactId>flume-ng-core</artifactId>
-			<version>1.3.0-SNAPSHOT</version>
+      <version>${flume.version}</version>
 		</dependency>
 	</dependencies>
 	<repositories>
