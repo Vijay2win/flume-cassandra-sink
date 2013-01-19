@@ -36,11 +36,6 @@ public class AbstractCassandraSinkTest {
   private static class NoOpCassandraSink extends AbstractCassandraSink {
 
     @Override
-    protected String getConfigName() {
-      return null; // this method isn't used anymore
-    }
-
-    @Override
     public Status process() throws EventDeliveryException {
       return null;  // no-op
     }
