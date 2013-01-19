@@ -26,15 +26,15 @@ public class CassandraSink extends AbstractCassandraSink {
         Transaction transaction = channel.getTransaction();
         transaction.begin();
         try {
-            MutationBatch mutation = keyspace.prepareMutationBatch();
-            long timestamp = System.currentTimeMillis();
-            String date = getDate(timestamp);
-            ColumnListMutation<String> columns = mutation.withRow(column_family, StringSerializer.get().toBytes(date));
             Event event = channel.take();
             if (event == null) {
                 transaction.commit();
                 return Status.BACKOFF;
             }
+            MutationBatch mutation = keyspace.prepareMutationBatch();
+            long timestamp = System.currentTimeMillis();
+            String date = getDate(timestamp);
+            ColumnListMutation<String> columns = mutation.withRow(chooser.choose(event), StringSerializer.get().toBytes(date));
             String prefix = null;
             if (event.getHeaders() != null) {
                 prefix = event.getHeaders().get(EVENT_PREFIX_KEY);
