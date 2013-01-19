@@ -9,7 +9,8 @@ import org.testng.annotations.Test;
 @Test
 public class AbstractCassandraSinkTest {
 
-  @Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "seeds must be defined in context")
+  @Test(expectedExceptions = IllegalArgumentException.class,
+      expectedExceptionsMessageRegExp = "seeds must be defined in context")
   public void testConfigureEmptyContext() throws Exception {
     AbstractCassandraSink sink = new NoOpCassandraSink();
     Context context = new Context();

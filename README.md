@@ -15,6 +15,7 @@ agent.sinks.cassandraEventSink.seeds=127.0.0.1:9160
 agent.sinks.cassandraEventSink.keyspace_name=events
 agent.sinks.cassandraEventSink.column_name=event
 agent.sinks.cassandraEventSink.timeout_in_ms=5000
+agent.sinks.cassandraEventSink.chooser=org.apache.flume.cassandra.DefaultColumnFamilyChooser
 ```
 
 #org.apache.flume.cassandra.CassandraSink
@@ -31,6 +32,7 @@ agent.sinks.cassandraEventSink.seeds=127.0.0.1:9160
 agent.sinks.cassandraEventSink.keyspace_name=events
 agent.sinks.cassandraEventSink.column_name=event
 agent.sinks.cassandraEventSink.timeout_in_ms=5000
+agent.sinks.cassandraEventSink.chooser=org.apache.flume.cassandra.DefaultColumnFamilyChooser
 ```
 
 #Installation
