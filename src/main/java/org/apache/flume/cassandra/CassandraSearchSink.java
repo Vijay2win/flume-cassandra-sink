@@ -55,9 +55,4 @@ public class CassandraSearchSink extends AbstractCassandraSink {
             transaction.close();
         }
     }
-
-    @Override
-    protected String getConfigName() {
-        return "cassandra_search.properties";
-    }
 }
