@@ -1,5 +1,7 @@
 package org.apache.flume.cassandra;
 
+import com.google.common.base.Preconditions;
+import com.google.common.base.Throwables;
 import org.apache.flume.Context;
 import org.apache.flume.conf.Configurable;
 import org.apache.flume.sink.AbstractSink;
@@ -13,10 +15,7 @@ import com.netflix.astyanax.connectionpool.ConnectionPoolMonitor;
 import com.netflix.astyanax.connectionpool.impl.ConnectionPoolConfigurationImpl;
 import com.netflix.astyanax.connectionpool.impl.CountingConnectionPoolMonitor;
 import com.netflix.astyanax.impl.AstyanaxConfigurationImpl;
-import com.netflix.astyanax.model.ColumnFamily;
 import com.netflix.astyanax.model.ConsistencyLevel;
-import com.netflix.astyanax.serializers.BytesArraySerializer;
-import com.netflix.astyanax.serializers.StringSerializer;
 import com.netflix.astyanax.thrift.ThriftFamilyFactory;
 
 public abstract class AbstractCassandraSink extends AbstractSink implements Configurable {
@@ -24,7 +23,7 @@ public abstract class AbstractCassandraSink extends AbstractSink implements Conf
     protected AstyanaxContext<Keyspace> context;
     protected Keyspace keyspace;
     protected long timeout;
-    protected ColumnFamily<byte[], String> column_family;
+    protected ColumnFamilyChooser chooser;
 
     @Override
     public void stop() {
@@ -36,6 +35,8 @@ public abstract class AbstractCassandraSink extends AbstractSink implements Conf
 
   @Override
   public void configure(final Context config) {
+    Preconditions.checkArgument(config.getString("seeds") != null, "seeds must be defined in context");
+
     String cluster = config.getString("cluster_name", "flume");
     if (keyspace != null) {
       return;
@@ -65,8 +66,16 @@ public abstract class AbstractCassandraSink extends AbstractSink implements Conf
     context.start();
     LOG.info("Started keyspace with context: {}", context.toString());
     keyspace = context.getEntity();
-    String column_name = config.getString("column_name", "events");
-    column_family = new ColumnFamily<byte[], String>(column_name, BytesArraySerializer.get(), StringSerializer.get());
+
+    final String chooserName = config.getString("chooser", DefaultColumnFamilyChooser.class.getName());
+    try {
+      Class<? extends ColumnFamilyChooser> chooserClass =
+          (Class<? extends ColumnFamilyChooser>) Class.forName(chooserName);
+      chooser = chooserClass.newInstance();
+      chooser.configure(config);
+    } catch (Exception e) {
+      throw Throwables.propagate(e);
+    }
 
     timeout = config.getLong("timeout_in_ms", 5000L);
   }
