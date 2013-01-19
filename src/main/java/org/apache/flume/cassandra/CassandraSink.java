@@ -67,9 +67,4 @@ public class CassandraSink extends AbstractCassandraSink {
         DateTime time = new DateTime(current);
         return time.toString("YYYY-MM-DD HH:MM:SS");
     }
-
-    @Override
-    protected String getConfigName() {
-        return "cassandra.properties";
-    }
 }
