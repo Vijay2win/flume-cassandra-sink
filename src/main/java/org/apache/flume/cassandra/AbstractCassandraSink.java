@@ -71,8 +71,6 @@ public abstract class AbstractCassandraSink extends AbstractSink implements Conf
     timeout = config.getLong("timeout_in_ms", 5000L);
   }
 
-    protected abstract String getConfigName();
-
     @Override
     public String toString() {
         return "Sink type:" + getClass().getSimpleName();
