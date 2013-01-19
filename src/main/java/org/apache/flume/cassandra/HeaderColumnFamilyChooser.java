@@ -58,6 +58,6 @@ public class HeaderColumnFamilyChooser implements ColumnFamilyChooser {
     Preconditions.checkArgument(context.getString(HEADERS_KEY) != null, "chooser.headers must be defined");
 
     joiner = Joiner.on(context.getString(JOINER_KEY, "_")).skipNulls();
-    headersKeys = HEADER_KEY_SPLITTER.split(context.getString("chooser.headers"));
+    headersKeys = HEADER_KEY_SPLITTER.split(context.getString(HEADERS_KEY));
   }
 }
