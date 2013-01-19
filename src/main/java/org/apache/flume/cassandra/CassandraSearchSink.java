@@ -25,15 +25,14 @@ public class CassandraSearchSink extends AbstractCassandraSink {
         Transaction transaction = channel.getTransaction();
         transaction.begin();
         try {
-            MutationBatch mutation = keyspace.prepareMutationBatch();
-            ColumnListMutation<String> columns = mutation.withRow(column_family,
-                    TimeUUIDSerializer.get().toBytes(UUID.randomUUID()));
-
             Event event = channel.take();
             if (event == null) {
                 transaction.commit();
                 return Status.BACKOFF;
             }
+            MutationBatch mutation = keyspace.prepareMutationBatch();
+            ColumnListMutation<String> columns = mutation.withRow(chooser.choose(event),
+              TimeUUIDSerializer.get().toBytes(UUID.randomUUID()));
             if (event.getHeaders() != null)
                 for (Entry<String, String> entry : event.getHeaders().entrySet())
                     columns.putColumn(entry.getKey(), entry.getValue());
