@@ -45,3 +45,14 @@ cd target
 ```
 
 Copy flume* lib/* to the flume installation lib directory.
+
+The following jars are the min set of jars needed:
+```
+flume-cassandra-sink-1.0.1-SNAPSHOT.jar
+astyanax-1.0.4.jar
+high-scale-lib-1.1.2.jar
+cassandra-all-1.1.0.jar
+guava-11.0.2.jar ## flume uses 10, cass needs 11
+libthrift-0.7.0.jar ## flume uses 0.6, upgrading to 0.7 worked fine for me
+cassandra-thrift-1.1.0.jar
+```
